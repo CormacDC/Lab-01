@@ -43,29 +43,26 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         countDownTimer = new MyCountDownTimer(startTime, interval);
         text.setText(text.getText() + String.valueOf(startTime));
     }
-}
 
-class MyCountDownTimer extends CountDownTimer {
+    class MyCountDownTimer extends CountDownTimer {
 
-    private TextView text;
-    private TextView timeElapsedView;
-    private final long startTime = 50 * 1000;
-    private long timeElapsed;
+        public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture,countDownInterval);
+        }
 
-    public MyCountDownTimer(long millisInFuture, long countDownInterval) {
-        super(millisInFuture,countDownInterval);
-    }
+        @Override
+        public void onTick(long millisUntilFinished) {
+            text.setText("Time remaining: " + millisUntilFinished);
+            timeElapsed = startTime - millisUntilFinished;
+            timeElapsedView.setText("Time Elapsed: " + String.valueOf(timeElapsed));
+        }
 
-    @Override
-    public void onTick(long millisUntilFinished) {
-        text.setText("Time remaining: " + millisUntilFinished);
-        timeElapsed = startTime - millisUntilFinished;
-        timeElapsedView.setText("Time Elapsed: " + String.valueOf(timeElapsed));
-    }
+        public void onFinish(){
+            text.setText("Time's up!");
+            timeElapsedView.setText("Time Elapsed: " + String.valueOf(startTime));
+        }
 
-    public void onFinish(){
-        text.setText("Time's up!");
-        timeElapsedView.setText("Time Elapsed: " + String.valueOf(startTime));
     }
 
 }
+
